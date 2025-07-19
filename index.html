@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inventory Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #343a40;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      display: block;
+    }
+    .sidebar a:hover {
+      background-color: #495057;
+    }
+    
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <h4 class="text-center py-3 border-bottom">Inventory</h4>
+  <a href="index.php"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+
+  <a data-bs-toggle="collapse" href="#catMenu" role="button"><i class="bi bi-tags me-2"></i>Categories</a>
+  <div class="collapse ms-3" id="catMenu">
+    <a href="view_categories.php">Add Category</a>
+    
+  </div>
+
+  <a data-bs-toggle="collapse" href="#prodMenu" role="button"><i class="bi bi-box me-2"></i>Products</a>
+  <div class="collapse ms-3" id="prodMenu">
+    <a href="view_products.php">View Product</a>
+    <a href="add_purchase.php">Purchases</a>
+    <a href="add_sale.php">Sales</a>
+    <a href="purchase_sales_list.php">View Sales & Purchases</a>
+  </div>
+
+  <a data-bs-toggle="collapse" href="#reportMenu" role="button"><i class="bi bi-graph-up-arrow me-2"></i>Reports</a>
+  <div class="collapse ms-3" id="reportMenu">
+    <a href="current_stock.php">Current Stock</a>
+   
+  </div>
+</div>
+<script>
+function updateDashboard() {
+    fetch('dashboard_data.php')
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('userCount').innerText = data.users;
+            document.getElementById('categoryCount').innerText = data.categories;
+            document.getElementById('productCount').innerText = data.products;
+            document.getElementById('salesTotal').innerText = `$${data.sales}`;
+        });
+}
+updateDashboard();
+setInterval(updateDashboard, 5000); // auto-update every 5 seconds
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
